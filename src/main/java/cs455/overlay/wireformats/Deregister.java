@@ -1,5 +1,35 @@
 package cs455.overlay.wireformats;
 
-public class Deregister {
+import java.io.IOException;
+
+public class Deregister implements Event {
+	
+	private int messageType;
+	private String nodeIPAddress;
+	private int nodePortNumber;
+	
+	public Deregister(int messageType, String nodeIPAddress, int nodePortNumber) {
+		this.messageType = messageType;
+		this.nodeIPAddress = nodeIPAddress;
+		this.nodePortNumber = nodePortNumber; 
+	}
+	
+	public byte[] getBytes() throws IOException {
+		BasicMessage msgToRegistry = new BasicMessage();
+		
+		return msgToRegistry.getBytes(messageType, nodeIPAddress, nodePortNumber);
+	}
+
+	public int getType() {
+		return messageType;
+	}
+	
+	public String getNodeIPAddress() {
+		return nodeIPAddress;
+	}
+	
+	public int getNodePortNumber() {
+		return nodePortNumber;
+	}
 
 }

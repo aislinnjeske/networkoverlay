@@ -1,5 +1,17 @@
 package cs455.overlay.wireformats;
 
-public class LinkWeights {
+import java.io.IOException;
+
+public class LinkWeights implements Event{
+	
+	private int messageType;
+
+	public byte[] getBytes() throws IOException {
+		return null;
+	}
+
+	public int getType() {
+		return messageType;
+	}
 
 }
