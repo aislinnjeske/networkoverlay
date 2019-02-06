@@ -31,6 +31,8 @@ public class MessagingNode implements Node {
 		
 	}
 	
+	//PORT IS THE WRONG PORT WHEN WE LIST-MESSAGING-NODES
+	
 	private void createConnectionToTheRegistry(String registryIPAddress, int registryPortNumber) {
 		try {
 			Socket socketToTheRegistry = new Socket(registryIPAddress, registryPortNumber);
@@ -104,6 +106,7 @@ public class MessagingNode implements Node {
 		}
 	}
 	
+	//TODO: IMPLEMENT
 	@Override
 	public void addNewConnection(TCPConnection connection) {
 		// TODO Auto-generated method stub
@@ -139,8 +142,8 @@ public class MessagingNode implements Node {
 		}
 	}
 
+	//TODO: IMPLEMENT
 	private void createConnectionsToNodes() {	
 	}
-
 
 }

@@ -1,12 +1,15 @@
 package cs455.overlay.node;
 
 import cs455.overlay.transport.*;
+import cs455.overlay.util.*;
 import cs455.overlay.wireformats.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Registry implements Node {
 
@@ -45,24 +48,19 @@ public class Registry implements Node {
 				
 				switch(instruction) {
 				case "setup-overlay":
-					System.out.println("Setting up overlay.");
-					//read in number of connections
-					//call method to set up overlay
-						//this should handle the error condition where the number of messaging nodes is less than the connection limit
+					int numberOfConnections = lineScan.nextInt(); 
+					setupOverlay(numberOfConnections);
 					break;
 				case "send-overlay-link-weights":
-					System.out.println("Sending Link-Weights message to all registered nodes.");
 					//send link weights message to all nodes in overlay
 					break;
 				case "list-weights":
-					System.out.println("Listing weights");
 					//call method to list information about all the links and weights
 					break;
 				case "list-messaging-nodes":
 					listMessagingNodes();
 					break;
 				case "start":
-					System.out.println("Starting rounds.");
 					//read in the number of rounds
 					//send task-initiate to all nodes
 					scanner.close();
@@ -73,16 +71,31 @@ public class Registry implements Node {
 				}
 				
 				lineScan.close();
-				
 			}
-			
 		}
 	}
 	
 	private void listMessagingNodes() {
-		for(TCPConnection connection : messagingNodeConnections) {
+		for(TCPConnection connection : registeredNodes) {
 			System.out.println(connection.getNodeHostName() + ":" + connection.getNodePortNumber());
 		}
+	}
+	
+	private void setupOverlay(int numberOfConnections) {
+		if(numberOfConnections > registeredNodes.size()) {
+			System.out.printf("Number of connections must be less than %d.\n", registeredNodes.size());
+		} else {
+			createOverlay(numberOfConnections);
+		}
+	}
+	
+	private void createOverlay(int numberOfConnections) {
+		OverlayCreator overlayCreator = new OverlayCreator(numberOfConnections, registeredNodes.size());
+		
+		ArrayList<OverlayNode> overlay = overlayCreator.createNewOverlay();
+		
+		//Call OverlayCreator in util package
+		//Send messaging node list messages to every node
 	}
 	
 	private void createServerSocket(int portNumber) {
@@ -114,7 +127,7 @@ public class Registry implements Node {
 		}
 	}
 	
-	public synchronized void addNewConnection(TCPConnection newConnection) {
+	public void addNewConnection(TCPConnection newConnection) {
 		messagingNodeConnections.add(newConnection);
 	}
 	
