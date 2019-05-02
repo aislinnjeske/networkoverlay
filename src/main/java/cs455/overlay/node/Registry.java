@@ -7,21 +7,25 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
 public class Registry implements Node {
 
-	private static ArrayList<TCPConnection> messagingNodeConnections;
-	private static ArrayList<TCPConnection> registeredNodes;
+	private static String[] weightedOverlay;
+	private static ArrayList<OverlayNode> registeredNodes;
 	private static ServerSocket serverSocket;
 	private static Protocol protocol;
+	private static StatisticsCollectorAndDisplay statsCollector;
+	private static int nodesDoneWithRounds;
+	private static int numberOfReceivedSummaries;
 	
 	public static void main(String[] args) {
-		messagingNodeConnections = new ArrayList<>();
+
 		registeredNodes = new ArrayList<>();
 		protocol = new Protocol();
+		nodesDoneWithRounds = 0;
+		numberOfReceivedSummaries = 0;
 		
 		int myPortNumber = Integer.parseInt(args[0]);
 		
@@ -31,71 +35,6 @@ public class Registry implements Node {
 		registry.waitForNodeConnections();
 		registry.waitForInstructions();
 
-	}
-	
-	private void waitForInstructions() {
-		
-		Scanner scanner = new Scanner(System.in);
-		
-		while(true) {
-			
-			if(scanner.hasNext()) {
-				String commandLineInput = scanner.nextLine();
-				
-				Scanner lineScan = new Scanner(commandLineInput);
-				
-				String instruction = lineScan.next();
-				
-				switch(instruction) {
-				case "setup-overlay":
-					int numberOfConnections = lineScan.nextInt(); 
-					setupOverlay(numberOfConnections);
-					break;
-				case "send-overlay-link-weights":
-					//send link weights message to all nodes in overlay
-					break;
-				case "list-weights":
-					//call method to list information about all the links and weights
-					break;
-				case "list-messaging-nodes":
-					listMessagingNodes();
-					break;
-				case "start":
-					//read in the number of rounds
-					//send task-initiate to all nodes
-					scanner.close();
-					System.exit(0);
-					break;
-				default:
-					System.out.println("Invalid command");
-				}
-				
-				lineScan.close();
-			}
-		}
-	}
-	
-	private void listMessagingNodes() {
-		for(TCPConnection connection : registeredNodes) {
-			System.out.println(connection.getNodeHostName() + ":" + connection.getNodePortNumber());
-		}
-	}
-	
-	private void setupOverlay(int numberOfConnections) {
-		if(numberOfConnections > registeredNodes.size()) {
-			System.out.printf("Number of connections must be less than %d.\n", registeredNodes.size());
-		} else {
-			createOverlay(numberOfConnections);
-		}
-	}
-	
-	private void createOverlay(int numberOfConnections) {
-		OverlayCreator overlayCreator = new OverlayCreator(numberOfConnections, registeredNodes.size());
-		
-		ArrayList<OverlayNode> overlay = overlayCreator.createNewOverlay();
-		
-		//Call OverlayCreator in util package
-		//Send messaging node list messages to every node
 	}
 	
 	private void createServerSocket(int portNumber) {
@@ -114,7 +53,144 @@ public class Registry implements Node {
 		serverThread.start();
 
 	}
+	
+	private void waitForInstructions() {
 
+		Scanner scanner = new Scanner(System.in);
+		
+		while(true) {
+			
+			if(scanner.hasNext()) {
+				String commandLineInput = scanner.nextLine();
+				
+				Scanner lineScan = new Scanner(commandLineInput);
+				
+				String instruction = lineScan.next();
+				
+				switch(instruction) {
+				case "setup-overlay":
+					int numberOfConnections = lineScan.nextInt(); 
+					
+					if(isValidNumberOfConnections(numberOfConnections)) {
+						
+						ArrayList<OverlayNode> unweightedOverlay = createOverlay(numberOfConnections);
+						sendMessagingNodesList(unweightedOverlay);
+						
+					} else {
+						System.out.printf("Please enter a number of connections less than %d.\n", registeredNodes.size());
+					}
+					
+					break;
+				case "send-overlay-link-weights":
+					sendLinkWeights();
+					break;
+				case "list-weights":
+					listLinkWeights();
+					break;
+				case "list-messaging-nodes":
+					listRegisteredNodes();
+					break;
+				case "start":
+					if(lineScan.hasNextInt()) {
+						int numberOfRounds = lineScan.nextInt();
+						sendTaskInitiate(numberOfRounds);
+					} else {
+						System.out.println("Usage: start number_of_rounds \n For example: start 25000 \n");
+					}
+					break;
+				default:
+					System.out.println("Invalid command");
+				}
+				
+				lineScan.close();
+			}
+		}
+	}
+	
+	private void sendTaskInitiate(int numberOfRounds) {	
+		TaskInitiate message = new TaskInitiate(protocol.getNumOfMessageType("TASK_INITIATE"), numberOfRounds);
+		sendMessageToAllNodes(message);
+	}
+	
+	private boolean isValidNumberOfConnections(int numberOfConnections) {
+		return numberOfConnections < registeredNodes.size();
+	}
+	
+	private ArrayList<OverlayNode> createOverlay(int numberOfConnections) {
+		OverlayCreator overlayCreator = new OverlayCreator(registeredNodes, numberOfConnections);
+
+		overlayCreator.createOverlay();
+		
+		weightedOverlay = overlayCreator.getWeightedOverlay();
+		
+		return overlayCreator.getConnectionsForEachNode();
+	}
+	
+	private void sendMessagingNodesList(ArrayList<OverlayNode> unweightedOverlay) {
+		for(OverlayNode node : unweightedOverlay) {
+			
+			MessagingNodesList message = createMessagingNodesList(node);
+			sendMessage(message, node.getSocket());
+		}
+	}
+	
+	private MessagingNodesList createMessagingNodesList(OverlayNode node) {
+		int messageType = protocol.getNumOfMessageType("MESSAGING_NODES_LIST");
+		
+		Set<OverlayNode> connections = node.getConnections();
+		int numberOfPeerNodes = connections.size();
+		
+		String[] peerMessagingNodes = new String[connections.size()];
+		int counter = 0;
+		
+		for(OverlayNode connectedNode : connections) {
+			String nodeName = connectedNode.getNameToSend();
+			peerMessagingNodes[counter++] = nodeName;
+		}
+		
+		return new MessagingNodesList(messageType, numberOfPeerNodes, peerMessagingNodes);
+	}
+	
+	private void sendMessage(Event message, Socket socket) {
+		try {
+			
+			OverlayNode node = new OverlayNode(socket);
+			node.sendMessageToThisNode(message.getBytes());
+			
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+	}
+	
+	private void sendLinkWeights() {
+		Event message = createLinkWeightsMessage();
+		sendMessageToAllNodes(message);
+	}
+	
+	private Event createLinkWeightsMessage() {
+		int messageType = protocol.getNumOfMessageType("LINK_WEIGHTS");
+
+		return new LinkWeights(messageType, weightedOverlay.length, weightedOverlay);
+	}
+	
+	private void sendMessageToAllNodes(Event message) {
+		for(OverlayNode node : registeredNodes) {
+			sendMessage(message, node.getSocket());
+		}
+	}
+	
+	private void listLinkWeights() {
+		for(int i = 0; i < weightedOverlay.length; i++) {
+			System.out.println(weightedOverlay[i]);
+		}
+	}
+	
+	private void listRegisteredNodes() {
+		for(OverlayNode node : registeredNodes) {
+			System.out.println(node.getNameToSend());
+		}
+	}
+	
 	public void onEvent(Event event, Socket socket) {
 		
 		switch(event.getType()) {
@@ -124,51 +200,45 @@ public class Registry implements Node {
 		case 3:
 			deregisterNode((Deregister) event, socket);
 			break;
+		case 7:
+			incrementNodesDoneWithRounds();
+			break;
+		case 9:
+			incrementSummariesReceived((TrafficSummary) event);
+			break;
 		}
 	}
 	
-	public void addNewConnection(TCPConnection newConnection) {
-		messagingNodeConnections.add(newConnection);
-	}
-	
-	private void registerNode(Register nodeToBeRegistered, Socket socket) {
-		//Finding the correct TCP connection to send the register response to
-		String IPAddressSent = nodeToBeRegistered.getNodeIPAddress(); 
-		int portNumberSent = nodeToBeRegistered.getNodePortNumber();
-		
-		String IPAddressOfSender = socket.getInetAddress().getHostName();
-		int portNumberOfSender = socket.getPort();
-		
+	private synchronized void registerNode(Register nodeToBeRegistered, Socket socket) {
 		try {
-			if(isValidRequest(IPAddressSent, portNumberSent, IPAddressOfSender, portNumberOfSender)) {
-				if(nodeEntryInOverlay(IPAddressSent, portNumberSent) == -1) {
-					
-					addNodeToOverlay(IPAddressSent, portNumberSent, socket);
-					
-					sendRegistrationResponse("SUCCESS", "Registration request successful. The number of messaging nodes currently constituting the overlay is " + registeredNodes.size(), socket);
-					
-				} else {
-					sendRegistrationResponse("FAILURE", "Registration request FAILED. " + IPAddressSent + ":" + portNumberSent + " is already registered in the network.", socket);
-				}
-
+			if(isValidRegisterRequest(nodeToBeRegistered, socket)) {
+				OverlayNode nodeToBeAdded = new OverlayNode(socket, nodeToBeRegistered.getHostname(), nodeToBeRegistered.getPortNumber());
+				addNodeToOverlay(nodeToBeAdded);
+				sendSuccessfulRegistrationResponse(socket);
 			} else {
-				sendRegistrationResponse("FAILURE", "Registration request FAILED. Cannot register " + IPAddressSent + ":" + portNumberSent + " with a request sent from " + IPAddressOfSender + ":" + portNumberOfSender, socket);
+				String reasonForFailure = getReasonForRegistrationFailure(nodeToBeRegistered, socket);
+				sendFailureResponse(reasonForFailure, socket);
 			}
-		} catch (Exception e) {
+		} catch(IOException e) {
 			System.out.println(e);
-		}
-		
+		}		
 	}
 	
-	private boolean isValidRequest(String IPAddressSent, int portSent, String IPRequestSender, int portRequestSender) {
-		return IPAddressSent.equals(IPRequestSender) && portSent == portRequestSender;
+	private boolean isValidRegisterRequest(Register nodeToBeRegistered, Socket socket) {
+		String hostnameSent = nodeToBeRegistered.getHostname(); 
+		String hostnameOfSender = socket.getInetAddress().getHostName();
+		
+		boolean hasMatchingHostname = hostnameSent.equals(hostnameOfSender);
+		boolean isNotCurrentlyRegistered = nodeEntryInOverlay(hostnameSent, nodeToBeRegistered.getPortNumber()) == -1;
+		
+		return  hasMatchingHostname && isNotCurrentlyRegistered ;
 	}
 	
 	private int nodeEntryInOverlay(String IPAddress, int portNumber) {
 		for(int i = 0; i < registeredNodes.size(); i++) {
-			TCPConnection connection = registeredNodes.get(i);
+			OverlayNode connection = registeredNodes.get(i);
 			
-			if(connection.getNodeHostName().equals(IPAddress) && connection.getNodePortNumber() == portNumber) {
+			if(connection.getHostname().equals(IPAddress) && connection.getPortNumber() == portNumber) {
 				return i; 
 			}
 		}
@@ -176,96 +246,114 @@ public class Registry implements Node {
 		return -1;
 	}
 	
-	private void addNodeToOverlay(String IPAddress, int portNumber, Socket socket) {
-		
-		try {
-			
-			TCPConnection nodeConnection = new TCPConnection(this, socket);
-			addNode(nodeConnection);
-			
-		} catch (IOException e) {
-			System.out.println(e);
-		}
+	private synchronized void addNodeToOverlay(OverlayNode nodeToBeAdded) {
+		registeredNodes.add(nodeToBeAdded);
 	}
 	
-	private synchronized void addNode(TCPConnection node) {
-		registeredNodes.add(node);
+	private void sendSuccessfulRegistrationResponse(Socket socket) {
+		byte statusCode = 1;
+		String additionalInfo = "Registration successful. The number of messaging nodes currently constituting the overlay is " + registeredNodes.size();
+		
+		Response response = new Response(protocol.getNumOfMessageType("RESPONSE"), statusCode, additionalInfo);
+		sendMessage(response, socket);
 	}
 	
-	private void sendRegistrationResponse(String registrationStatus, String additionalInfo, Socket socket) {
-		byte statusCode;
+	private String getReasonForRegistrationFailure(Register nodeToBeRegistered, Socket socket) {
+		String hostnameSent = nodeToBeRegistered.getHostname(); 
+		String hostnameOfSender = socket.getInetAddress().getHostName();
 		
-		if(registrationStatus.equals("SUCCESS")) {
-			statusCode = (byte) 1;
+		if(!hostnameSent.equals(hostnameOfSender)) {
+			return "Registration request FAILED. Cannot register " + hostnameSent + " with a request sent from " + hostnameOfSender;
 		} else {
-			statusCode = (byte) 0;
-		}
-		
-		RegistrationResponse message = new RegistrationResponse(protocol.getNumOfMessageType("REGISTRATION_RESPONSE"), statusCode, additionalInfo);
-		sendMessage(message, socket);
-	}
-	
-	private void sendMessage(Event message, Socket socket) {
-		
-		try {
-			
-			TCPConnection connection = new TCPConnection(this, socket);
-			connection.sendMessageToNode(message.getBytes());
-			
-		} catch (IOException e) {
-			System.out.println(e);
+			return "Registration request FAILED. Node is already registered.";
 		}
 	}
 	
-	private void deregisterNode(Deregister nodeToBeDeregistered, Socket socket) {
-		//Finding the correct TCP connection to send the register response to
-		String IPAddressSent = nodeToBeDeregistered.getNodeIPAddress(); 
-		int portNumberSent = nodeToBeDeregistered.getNodePortNumber();
+	private void sendFailureResponse(String reasonForFailure, Socket socket) {
+		byte statusCode = 0;
 		
-		String IPAddressOfSender = socket.getInetAddress().getHostName();
-		int portNumberOfSender = socket.getPort();
+		Response response = new Response(protocol.getNumOfMessageType("RESPONSE"), statusCode, reasonForFailure);
+		sendMessage(response, socket);
+	}
+	
+	private synchronized void deregisterNode(Deregister nodeToBeDeregistered, Socket socket) {
+		int nodeIndexInOverlay = nodeEntryInOverlay(nodeToBeDeregistered.getNodeHostname(), nodeToBeDeregistered.getNodePortNumber());
 		
-		try {
-			if(isValidRequest(IPAddressSent, portNumberSent, IPAddressOfSender, portNumberOfSender)) {
-				int nodeIndex = nodeEntryInOverlay(IPAddressSent, portNumberSent);
-				
-				//If the node is registered, remove it and send successful deregistration response
-				if(nodeIndex != -1) {
-
-					removeNodeFromOverlay(nodeIndex);
-					
-					sendDeregistrationResponse("SUCCESS", "Deregistration request successful. The number of messaging nodes currently constituting the overlay is " + registeredNodes.size(), socket);
-					
-				} else {
-					
-					//Invalid request because IP Address/Port number to be deregistered is not in the overlay
-					sendDeregistrationResponse("FAILURE", "Deregistration request FAILED. " + IPAddressSent + ":" + portNumberSent + " is not registred in the network.", socket);
-				}
-				
-			} else {
-				//Invalid request because IP Address of sender != IP Address of node to be deregistered 
-				sendDeregistrationResponse("FAILURE", "Deregistration request FAILED. Cannot deregister " + IPAddressSent + ":" + portNumberSent + " with a request sent from " + IPAddressOfSender + ":" + portNumberOfSender, socket);
-			}
-		} catch (Exception e) {
-			System.out.println(e);
+		if(isValidDeregisterRequest(nodeToBeDeregistered, socket, nodeIndexInOverlay)) {
+			removeNodeFromOverlay(nodeIndexInOverlay);
+		} else {
+			String reasonForFailure = getReasonForDeregistrationFailure(nodeToBeDeregistered, socket);
+			sendFailureResponse(reasonForFailure, socket);
 		}
+	}
+	
+	private boolean isValidDeregisterRequest(Deregister nodeToBeDeregistered, Socket socket, int indexInOverlay) {
+		String hostnameSent = nodeToBeDeregistered.getNodeHostname(); 
+		String hostnameOfSender = socket.getInetAddress().getHostName();
+		
+		boolean hasMatchingHostname = hostnameSent.equals(hostnameOfSender);
+		boolean isCurrentlyRegistered = indexInOverlay != -1;
+		
+		return hasMatchingHostname && isCurrentlyRegistered;
 	}
 	
 	private synchronized void removeNodeFromOverlay(int nodeIndex) {
 		registeredNodes.remove(nodeIndex);
 	}
 	
-	private void sendDeregistrationResponse(String registrationStatus, String additionalInfo, Socket socket) {
-		byte statusCode;
+	private String getReasonForDeregistrationFailure(Deregister nodeToBeDeregistered, Socket socket) {
+		String hostnameSent = nodeToBeDeregistered.getNodeHostname(); 
+		String hostnameOfSender = socket.getInetAddress().getHostName();
 		
-		if(registrationStatus.equals("SUCCESS")) {
-			statusCode = (byte) 1;
+		if(!hostnameSent.equals(hostnameOfSender)) {
+			return "Deregistration request FAILED. Cannot register " + hostnameSent + " with a request sent from " + hostnameOfSender;
 		} else {
-			statusCode = (byte) 0;
+			return "Deregistration request FAILED. Node is not currently registered.";
 		}
+	}
+
+	private synchronized void incrementNodesDoneWithRounds() {
+		nodesDoneWithRounds++;
 		
-		DeregistrationResponse message = new DeregistrationResponse(protocol.getNumOfMessageType("DEREGISTRATION_RESPONSE"), statusCode, additionalInfo);
-		sendMessage(message, socket); 
+		if(nodesDoneWithRounds == registeredNodes.size()) {
+			nodesDoneWithRounds = 0;
+			sendPullTrafficSummary();
+			createStatsCollector();
+		}
 	}
 	
+	private void sendPullTrafficSummary() {
+		try {
+			Thread.sleep(15000);
+			PullTrafficSummary message = new PullTrafficSummary(protocol.getNumOfMessageType("PULL_TRAFFIC_SUMMARY"));
+			sendMessageToAllNodes(message);
+			
+		} catch(InterruptedException e) {
+			System.out.println(e);
+			System.exit(0);
+		}
+	}
+	
+	private void createStatsCollector() {
+		statsCollector = new StatisticsCollectorAndDisplay(registeredNodes.size());
+	}
+	
+	private synchronized void incrementSummariesReceived(TrafficSummary message) {
+		numberOfReceivedSummaries++;
+		readTrafficSummary(message);
+		
+		if(numberOfReceivedSummaries == registeredNodes.size()) {
+			numberOfReceivedSummaries = 0;
+			displayStats();
+		}
+	}
+	
+	private void readTrafficSummary(TrafficSummary message) {
+		statsCollector.addNodeStatisticsToSummary(message.getNameToSend(), message.getMessagesSent(),  message.getSumOfMessagesSent(), message.getMessagesReceived(), message.getSumOfMessagesReceived(), message.getNumberOfMessagesRelayed());
+	}
+	
+	private void displayStats() {
+		statsCollector.printDisplay();
+	}
 }
+

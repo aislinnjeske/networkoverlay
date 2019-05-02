@@ -1,7 +1,6 @@
 package cs455.overlay.transport;
 
 import cs455.overlay.node.Node;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -25,12 +24,10 @@ public class TCPServerThread implements Runnable{
 				//Blocking call
 				Socket incomingConnectionSocket = serverSocket.accept();
 				
-				TCPConnection newNodeConnection = new TCPConnection(node, incomingConnectionSocket); 
-				
-				node.addNewConnection(newNodeConnection);
-				
-				newNodeConnection.beginConnection();
-				
+				//Creates a receiverThread that will receive messages on the socket
+				Thread receiverThread = new Thread(new TCPReceiverThread(node, incomingConnectionSocket));
+				receiverThread.start();
+
 			} catch (IOException e) {
 				System.out.println(e);
 			}

@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class BasicMessage {
 	
-	public byte[] getBytes(int messageType, String nodeIPAddress, int nodePortNumber) throws IOException {
+	public byte[] getBytes(int messageType, String nodeHostname, int nodePortNumber) throws IOException {
 		
 		byte[] marshalledBytes = null;
 		ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
@@ -17,7 +17,7 @@ public class BasicMessage {
 		dataOutputStream.writeInt(messageType);
 		
 		//Writing the node IP address
-		byte[] nodeIPAddressBytes = nodeIPAddress.getBytes();
+		byte[] nodeIPAddressBytes = nodeHostname.getBytes();
 		int nodeIPAddressLength = nodeIPAddressBytes.length;
 		dataOutputStream.writeInt(nodeIPAddressLength);
 		dataOutputStream.write(nodeIPAddressBytes);

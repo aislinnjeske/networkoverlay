@@ -2,6 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="acd73af7-0f2b-4a1e-8ff0-aa6710fb02d9" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/cs455/overlay/transport/TCPConnection.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/DeregistrationResponse.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/RegistrationResponse.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/transport/TCPConnection.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/DeregistrationResponse.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/RegistrationResponse.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/transport/TCPConnection.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/DeregistrationResponse.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/RegistrationResponse.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.bin" afterPath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.lock" afterPath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.bin" />
@@ -9,14 +18,69 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/classAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/classAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/javaCompile.lock" afterPath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/javaCompile.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/dijkstra/RoutingCache.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/dijkstra/RoutingCache.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/dijkstra/ShortestPath.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/dijkstra/ShortestPath.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/node/MessagingNode.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/node/MessagingNode.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/node/Node.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/node/Node.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/node/OverlayNode.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/node/OverlayNode.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/node/Registry.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/node/Registry.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/transport/TCPSender.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/transport/TCPSender.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/transport/TCPServerThread.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/transport/TCPServerThread.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/util/OverlayCreator.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/util/OverlayCreator.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/util/StatisticsCollectorAndDisplay.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/util/StatisticsCollectorAndDisplay.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/BasicMessage.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/BasicMessage.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/Deregister.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/Deregister.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/EventFactory.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/EventFactory.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/LinkWeights.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/LinkWeights.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/MessagingNodesList.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/MessagingNodesList.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/Protocol.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/Protocol.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/Register.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/Register.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/TaskComplete.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/TaskComplete.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/TaskInitiate.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/TaskInitiate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/TrafficSummary.class" afterPath="$PROJECT_DIR$/bin/cs455/overlay/wireformats/TrafficSummary.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/dijkstra/RoutingCache.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/dijkstra/RoutingCache.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/dijkstra/ShortestPath.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/dijkstra/ShortestPath.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/node/MessagingNode.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/node/MessagingNode.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/node/Node.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/node/Node.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/node/OverlayNode.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/node/OverlayNode.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/node/Registry.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/node/Registry.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/transport/TCPSender.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/transport/TCPSender.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/transport/TCPServerThread.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/transport/TCPServerThread.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/util/OverlayCreator.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/util/OverlayCreator.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/util/StatisticsCollectorAndDisplay.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/util/StatisticsCollectorAndDisplay.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/BasicMessage.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/BasicMessage.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/Deregister.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/Deregister.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/EventFactory.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/EventFactory.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/LinkWeights.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/LinkWeights.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/MessagingNodesList.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/MessagingNodesList.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/Protocol.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/Protocol.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/Register.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/Register.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/TaskComplete.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/TaskComplete.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/TaskInitiate.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/TaskInitiate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/TrafficSummary.class" afterPath="$PROJECT_DIR$/build/classes/java/main/cs455/overlay/wireformats/TrafficSummary.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/libs/HW-1.jar" afterPath="$PROJECT_DIR$/build/libs/HW-1.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/machine_list" afterPath="$PROJECT_DIR$/build/classes/java/main/machine_list" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/start.sh" afterPath="$PROJECT_DIR$/build/classes/java/main/start.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/dijkstra/RoutingCache.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/dijkstra/RoutingCache.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/dijkstra/ShortestPath.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/dijkstra/ShortestPath.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/node/MessagingNode.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/node/MessagingNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/node/Node.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/node/Node.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/node/OverlayNode.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/node/OverlayNode.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/node/Registry.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/node/Registry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/transport/TCPSender.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/transport/TCPSender.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/transport/TCPServerThread.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/transport/TCPServerThread.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/util/OverlayCreator.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/util/OverlayCreator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/util/StatisticsCollectorAndDisplay.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/util/StatisticsCollectorAndDisplay.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/BasicMessage.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/BasicMessage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/Deregister.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/Deregister.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/EventFactory.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/EventFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/LinkWeights.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/LinkWeights.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/MessagingNodesList.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/MessagingNodesList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/Protocol.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/Protocol.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/Register.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/Register.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/TaskComplete.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/TaskComplete.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/TaskInitiate.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/TaskInitiate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/TrafficSummary.java" afterPath="$PROJECT_DIR$/src/main/java/cs455/overlay/wireformats/TrafficSummary.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,7 +91,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="MessagingNode.class" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bin/cs455/overlay/node/MessagingNode.class">
           <provider selected="true" editor-type-id="text-editor">
@@ -46,6 +110,13 @@
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
       <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/bin/cs455/overlay/node/MessagingNode.class" />
+      </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
@@ -75,10 +146,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -129,7 +200,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../cs464/Multi_Touch_Media/MultiTouch-Media-v1.0" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -237,41 +308,42 @@
       <option name="presentableId" value="Default" />
       <updated>1549395334509</updated>
       <workItem from="1549395339647" duration="41000" />
+      <workItem from="1552433565116" duration="37000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41000" />
+    <option name="totallyTimeSpent" value="78000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="215" y="47" width="2096" height="1206" extended-state="0" />
     <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2524414" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,6 +357,14 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/bin/cs455/overlay/node/MessagingNode.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bin/cs455/overlay/node/MessagingNode.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">

@@ -8,24 +8,24 @@ import java.io.IOException;
 public class TrafficSummary implements Event {
 	
 	private int messageType;
-	private String nodeIPAddress;
+	private String nodeHostname;
 	private int nodePortNumber;
 	private int numberOfMessagesSent;
-	private int sumOfMessagesSent;
+	private long sumOfMessagesSent;
 	private int numberOfMessagesReceived;
-	private int sumOfMessagesReceived;
+	private long sumOfMessagesReceived;
 	private int numberOfMessagesRelayed; 
 	
-	public TrafficSummary(int messageType, String nodeIPAddress, int nodePortNumber, int messagesSent, int sumOfMessagesSent,
-			              int messagesRecieved, int sumOfMessagesRecieved, int messagesRelayed) {
+	public TrafficSummary(int messageType, String nodeHostname, int nodePortNumber, int messagesSent, long sumOfMessagesSent,
+			              int messagesReceived, long sumOfMessagesReceived, int messagesRelayed) {
 		
 		this.messageType = messageType;
-		this.nodeIPAddress = nodeIPAddress;
+		this.nodeHostname = nodeHostname;
 		this.nodePortNumber = nodePortNumber;
 		this.numberOfMessagesSent = messagesSent;
 		this.sumOfMessagesSent = sumOfMessagesSent; 
-		this.numberOfMessagesReceived = messagesRecieved;
-		this.sumOfMessagesReceived = sumOfMessagesRecieved;
+		this.numberOfMessagesReceived = messagesReceived;
+		this.sumOfMessagesReceived = sumOfMessagesReceived;
 		this.numberOfMessagesRelayed = messagesRelayed; 
 	}
 
@@ -39,10 +39,10 @@ public class TrafficSummary implements Event {
 		dataOutputStream.writeInt(messageType);
 		
 		//Writing the node IP Address
-		byte[] nodeIPAddressBytes = nodeIPAddress.getBytes();
-		int nodeIPAddressLength = nodeIPAddressBytes.length;
-		dataOutputStream.writeInt(nodeIPAddressLength);
-		dataOutputStream.write(nodeIPAddressBytes);
+		byte[] nodeHostnameBytes = nodeHostname.getBytes();
+		int nodeHostnameLength = nodeHostnameBytes.length;
+		dataOutputStream.writeInt(nodeHostnameLength);
+		dataOutputStream.write(nodeHostnameBytes);
 		
 		//Writing the node port number
 		dataOutputStream.writeInt(nodePortNumber);
@@ -51,13 +51,13 @@ public class TrafficSummary implements Event {
 		dataOutputStream.writeInt(numberOfMessagesSent);
 		
 		//Writing the sum of the messages sent
-		dataOutputStream.writeInt(sumOfMessagesSent);
+		dataOutputStream.writeLong(sumOfMessagesSent);
 		
 		//Writing the number of messages received
 		dataOutputStream.writeInt(numberOfMessagesReceived);
 		
 		//Writing the sum of the messages received
-		dataOutputStream.writeInt(sumOfMessagesReceived);
+		dataOutputStream.writeLong(sumOfMessagesReceived);
 		
 		//Writing the number of messages relayed
 		dataOutputStream.writeInt(numberOfMessagesRelayed); 
@@ -74,6 +74,30 @@ public class TrafficSummary implements Event {
 
 	public int getType() {
 		return messageType; 
+	}
+	
+	public String getNameToSend() {
+		return nodeHostname + ":" + nodePortNumber;
+	}
+	
+	public int getMessagesSent() {
+		return numberOfMessagesSent;
+	}
+	
+	public long getSumOfMessagesSent() {
+		return sumOfMessagesSent;
+	}
+	
+	public int getMessagesReceived() {
+		return numberOfMessagesReceived;
+	}
+	
+	public long getSumOfMessagesReceived() {
+		return sumOfMessagesReceived;
+	}
+	
+	public int getNumberOfMessagesRelayed() {
+		return numberOfMessagesRelayed;
 	}
 
 }

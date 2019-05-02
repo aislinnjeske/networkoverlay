@@ -5,30 +5,30 @@ import java.io.IOException;
 public class Register implements Event {
 	
 	private int messageType;
-	private String nodeIPAddress;
+	private String nodeHostname;
 	private int nodePortNumber;
 	
-	public Register(int messageType, String nodeIPAddress, int nodePortNumber) {
+	public Register(int messageType, String nodeHostname, int nodePortNumber) {
 		this.messageType = messageType;
-		this.nodeIPAddress = nodeIPAddress;
+		this.nodeHostname = nodeHostname;
 		this.nodePortNumber = nodePortNumber; 
 	}
 	
 	public byte[] getBytes() throws IOException {
 		BasicMessage msgToRegistry = new BasicMessage();
 		
-		return msgToRegistry.getBytes(messageType, nodeIPAddress, nodePortNumber);
+		return msgToRegistry.getBytes(messageType, nodeHostname, nodePortNumber);
 	}
 
 	public int getType() {
 		return messageType;
 	}
 	
-	public String getNodeIPAddress() {
-		return nodeIPAddress;
+	public String getHostname() {
+		return nodeHostname;
 	}
 	
-	public int getNodePortNumber() {
+	public int getPortNumber() {
 		return nodePortNumber;
 	}
 

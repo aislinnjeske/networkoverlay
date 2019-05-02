@@ -5,19 +5,19 @@ import java.io.IOException;
 public class TaskComplete implements Event {
 	
 	private int messageType;
-	private String nodeIPAddress;
+	private String nodeHostname;
 	private int nodePortNumber;
 	
-	public TaskComplete(int messageType, String nodeIPAddress, int nodePortNumber) {
+	public TaskComplete(int messageType, String nodeHostname, int nodePortNumber) {
 		this.messageType = messageType;
-		this.nodeIPAddress = nodeIPAddress;
+		this.nodeHostname = nodeHostname;
 		this.nodePortNumber = nodePortNumber;
 	}
 
 	public byte[] getBytes() throws IOException {
 		BasicMessage msgToRegistry = new BasicMessage();
 		
-		return msgToRegistry.getBytes(messageType, nodeIPAddress, nodePortNumber);
+		return msgToRegistry.getBytes(messageType, nodeHostname, nodePortNumber);
 	}
 
 	public int getType() {

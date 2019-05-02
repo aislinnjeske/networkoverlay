@@ -5,13 +5,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class DeregistrationResponse implements Event {
+public class Response implements Event {
 	
 	 private int messageType;
 	 private byte statusCode;
 	 private String additionalInfo; 
 	 
-	 public DeregistrationResponse(int messageType, byte statusCode, String additionalInfo) {
+	 public Response(int messageType, byte statusCode, String additionalInfo) {
 		 this.messageType = messageType;
 		 this.statusCode = statusCode;
 		 this.additionalInfo = additionalInfo;
@@ -54,9 +54,5 @@ public class DeregistrationResponse implements Event {
 	
 	public String getAdditionalInfo() {
 		return additionalInfo;
-	}
-
-	public void confirmRegistration() {
-		System.out.println("I got the registration response");
 	}
 }

@@ -6,7 +6,7 @@ public class Protocol {
 		switch(msgType) {
 		case "REGISTER_REQUEST":
 			return 1;
-		case "REGISTRATION_RESPONSE":
+		case "RESPONSE":
 			return 2;
 		case "DEREGISTER_REQUEST":
 			return 3;
@@ -22,7 +22,7 @@ public class Protocol {
 			return 8;
 		case "TRAFFIC_SUMMARY":
 			return 9; 
-		case "DEREGISTRATION_RESPONSE":
+		case "ROUNDS_MESSAGE":
 			return 10;
 		default:
 			return 0;
@@ -34,7 +34,7 @@ public class Protocol {
 		case 1:
 			return "REGISTER_REQUEST";
 		case 2:
-			return "REGISTRATION_RESPONSE";
+			return "RESPONSE";
 		case 3:
 			return "DEREGISTER_REQUEST";
 		case 4:
@@ -50,7 +50,7 @@ public class Protocol {
 		case 9:
 			return "TRAFFIC_SUMMARY";
 		case 10:
-			return "DEREGISTRATION_RESPONSE";
+			return "ROUNDS_MESSAGE";
 		default:
 			return "INVALID"; 
 		}

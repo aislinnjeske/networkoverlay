@@ -39,5 +39,9 @@ public class TaskInitiate implements Event {
 	public int getType() {
 		return messageType;
 	}
+	
+	public int getNumberOfRounds() {
+		return numberOfRounds;
+	}
 
 }
